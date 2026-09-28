@@ -31,4 +31,3 @@ export const fetchOdds = async (fixtureId: number) => {
 };
 
 export default api;
-      
