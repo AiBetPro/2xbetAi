@@ -1,6 +1,8 @@
 'use client';
-
-import { useState } from 'react';
+import Link from 'next/link';
+import CouponBar from '../../components/CouponBar';
+import { Icon, TeamBadge } from '../../components/Icons';
+import { useEffect, useState } from 'react';
 
 type Match = {
   id: string;
@@ -78,6 +80,26 @@ export default function DashboardPage() {
   const [search, setSearch] = useState('');
   const [selectedSport, setSelectedSport] =
     useState('Football');
+  const [balance, setBalance] = useState('0');
+
+  useEffect(() => {
+    fetch('/api/profile')
+      .then(async (response) => {
+        if (!response.ok) {
+          window.location.href = '/connexion';
+          return null;
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data?.profile) {
+          setBalance(data.profile.wallet?.balance ?? '0');
+        }
+      })
+      .catch(() => {
+        window.location.href = '/connexion';
+      });
+  }, []);
 
   const filteredMatches = matches.filter((match) => {
     const text = `${match.home} ${match.away} ${match.league}`
@@ -96,12 +118,13 @@ export default function DashboardPage() {
           GOA<span>LIX</span>
         </div>
 
-        <button
+        <Link
+          href="/connexion"
           className="dashboard-account"
           aria-label="Compte"
         >
-          👤
-        </button>
+          <Icon name="user" size={20} />
+        </Link>
 
       </header>
 
@@ -113,13 +136,11 @@ export default function DashboardPage() {
             <span>MON SOLDE</span>
 
             <strong>
-              0 FCFA
+              {Number(balance).toLocaleString('fr-FR')} FCFA
             </strong>
           </div>
 
-          <div className="balance-icon">
-            💳
-          </div>
+          <div className="balance-icon"><Icon name="wallet" size={22}/></div>
         </div>
 
         <div className="balance-actions">
@@ -143,7 +164,7 @@ export default function DashboardPage() {
       {/* SEARCH */}
       <div className="dashboard-search">
 
-        <span>⌕</span>
+        <span><Icon name="search" size={19}/></span>
 
         <input
           type="text"
@@ -311,9 +332,7 @@ export default function DashboardPage() {
 
                   <div className="dashboard-team">
 
-                    <div className="team-logo">
-                      {match.home.charAt(0)}
-                    </div>
+                    <TeamBadge team={match.home} size="md" />
 
                     <strong>
                       {match.home}
@@ -327,9 +346,7 @@ export default function DashboardPage() {
 
                   <div className="dashboard-team">
 
-                    <div className="team-logo">
-                      {match.away.charAt(0)}
-                    </div>
+                    <TeamBadge team={match.away} size="md" />
 
                     <strong>
                       {match.away}
@@ -421,7 +438,7 @@ export default function DashboardPage() {
 
       </footer>
 
-    </main>
+    <CouponBar />
+      </main>
   );
-  }
-    
+    }
