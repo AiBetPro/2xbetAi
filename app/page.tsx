@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import CouponBar from '../components/CouponBar';
+import { Icon, TeamBadge } from '../components/Icons';
 
 const matches = [
   { id:'arsenal-chelsea', league:'Premier League', time:'18:00', home:'Arsenal', away:'Chelsea', odds:['1.65','3.70','4.90'] },
@@ -17,7 +19,11 @@ export default function Home() {
           <Link href="/ai-prono">🤖 IA Prono</Link>
           <Link href="/bets">Mes paris</Link>
         </nav>
-        <Link href="/dashboard" className="account-button">👤</Link>
+        <div className="header-account-actions">
+          <Link href="/connexion" className="header-auth-link">Connexion</Link>
+          <Link href="/connexion?mode=register" className="header-auth-button">Inscription</Link>
+          <Link href="/connexion" className="account-button" aria-label="Connexion ou inscription">👤</Link>
+        </div>
       </header>
 
       <section className="hero-v1">
@@ -34,9 +40,9 @@ export default function Home() {
         <Link href="/match/arsenal-chelsea" className="hero-card hero-card-link">
           <div className="hero-card-top"><span>🔥 MATCH À LA UNE</span><small>18:00</small></div>
           <div className="teams">
-            <div><div className="team-icon">A</div><strong>Arsenal</strong></div>
+            <div><TeamBadge team="Arsenal" size="lg" /><strong>Arsenal</strong></div>
             <span className="vs">VS</span>
-            <div><div className="team-icon">C</div><strong>Chelsea</strong></div>
+            <div><TeamBadge team="Chelsea" size="lg" /><strong>Chelsea</strong></div>
           </div>
           <div className="featured-odds">
             <div><small>1</small><strong>1.65</strong></div>
@@ -50,10 +56,10 @@ export default function Home() {
       <section className="sports-section">
         <div className="section-title"><div><span>EXPLORER</span><h2>Sports populaires</h2></div><Link href="/dashboard">Voir tout →</Link></div>
         <div className="sports-grid">
-          <Link href="/dashboard" className="sport-card active"><span>⚽</span><strong>Football</strong><small>245 matchs</small></Link>
-          <Link href="/dashboard" className="sport-card"><span>🏀</span><strong>Basketball</strong><small>38 matchs</small></Link>
-          <Link href="/dashboard" className="sport-card"><span>🎾</span><strong>Tennis</strong><small>64 matchs</small></Link>
-          <Link href="/dashboard" className="sport-card"><span>🏎️</span><strong>Formule 1</strong><small>12 événements</small></Link>
+          <Link href="/dashboard" className="sport-card active"><Icon name="ball" size={24}/><strong>Football</strong><small>245 matchs</small></Link>
+          <Link href="/dashboard" className="sport-card"><span className="sport-letter">BK</span><strong>Basketball</strong><small>38 matchs</small></Link>
+          <Link href="/dashboard" className="sport-card"><span className="sport-letter">TN</span><strong>Tennis</strong><small>64 matchs</small></Link>
+          <Link href="/dashboard" className="sport-card"><span className="sport-letter">F1</span><strong>Formule 1</strong><small>12 événements</small></Link>
         </div>
       </section>
 
@@ -76,13 +82,13 @@ export default function Home() {
       </section>
 
       <section className="ai-banner">
-        <div><div className="ai-label">🤖 GOALIX AI</div><h2>Laissez l&apos;IA<br />analyser les matchs.</h2><p>Choisissez votre niveau de risque et laissez notre système classer les opportunités disponibles.</p><Link href="/ai-prono" className="primary-button">Découvrir IA Prono →</Link></div>
+        <div><div className="ai-label"><Icon name="ai" size={16}/> GOALIX AI</div><h2>Laissez l&apos;IA<br />analyser les matchs.</h2><p>Choisissez votre niveau de risque et laissez notre système classer les opportunités disponibles.</p><Link href="/ai-prono" className="primary-button">Découvrir IA Prono →</Link></div>
         <div className="ai-orb"><span>AI</span></div>
       </section>
 
       <footer className="goalix-footer"><div><Link href="/" className="logo">GOA<span>LIX</span></Link><p>Sports Betting & AI Predictions Platform</p></div><div className="footer-links"><Link href="/dashboard">Sports</Link><Link href="/live">Live</Link><Link href="/ai-prono">IA Prono</Link><Link href="/bets">Mes paris</Link></div></footer>
       <div className="mobile-nav"><Link href="/"><span>⌂</span>Accueil</Link><Link href="/dashboard"><span>⚽</span>Sports</Link><Link href="/live"><span>🔴</span>Live</Link><Link href="/ai-prono"><span>🤖</span>IA</Link><Link href="/bets"><span>🎫</span>Paris</Link></div>
-    </main>
+    <CouponBar />
+      </main>
   );
-   }
-          
+}
