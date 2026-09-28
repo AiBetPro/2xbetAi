@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import CouponBar from '../../components/CouponBar';
 
 type RiskProfile = 'prudent' | 'equilibre' | 'audacieux';
 
@@ -425,6 +426,7 @@ export default function AIPronoPage() {
         </p>
       </footer>
 
-    </main>
+    <CouponBar />
+      </main>
   );
     } 
