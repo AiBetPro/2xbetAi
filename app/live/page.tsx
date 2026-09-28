@@ -1,6 +1,7 @@
 'use client';
-
 import Link from 'next/link';
+import CouponBar from '../../components/CouponBar';
+import { TeamBadge } from '../../components/Icons';
 import { useState } from 'react';
 
 type LiveMatch = {
@@ -246,7 +247,7 @@ export default function LivePage() {
                   {/* HOME */}
                   <div className="text-center">
                     <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-100 text-lg font-black text-slate-800">
-                      {match.home.slice(0, 2).toUpperCase()}
+                      <TeamBadge team={match.home} size="md" />
                     </div>
 
                     <div className="text-sm font-black text-slate-900">
@@ -272,7 +273,7 @@ export default function LivePage() {
                   {/* AWAY */}
                   <div className="text-center">
                     <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-100 text-lg font-black text-slate-800">
-                      {match.away.slice(0, 2).toUpperCase()}
+                      <TeamBadge team={match.away} size="md" />
                     </div>
 
                     <div className="text-sm font-black text-slate-900">
@@ -598,7 +599,7 @@ export default function LivePage() {
 
         </div>
       </nav>
-    </main>
+    <CouponBar />
+      </main>
   );
-}
-        
+      }
