@@ -1,18 +1,34 @@
-import {PrismaClient} from '@prisma/client';
-const prisma=new PrismaClient();
+import { PrismaClient } from '@prisma/client';
+import { hashPassword } from '../lib/auth';
 
-async function main(){
-  await prisma.user.upsert({
-    where:{id:'demo-user'},
-    update:{},
-    create:{
-      id:'demo-user',
-      email:'demo@goalix.local',
-      passwordHash:'DEMO_ONLY',
-      balance:10000,
-      currency:'XOF'
-    }
+const prisma = new PrismaClient();
+
+async function main() {
+  const email = 'demo@goalix.local';
+  const user = await prisma.user.upsert({
+    where: { email },
+    update: {},
+    create: {
+      email,
+      name: 'Utilisateur Demo',
+      passwordHash: hashPassword('DemoPassword123!'),
+      wallet: { create: { balance: 10000, currency: 'XOF' } },
+    },
+    include: { wallet: true },
   });
+
+  if (!user.wallet) {
+    await prisma.wallet.create({ data: { userId: user.id, balance: 10000, currency: 'XOF' } });
+  }
+
+  console.log(`Demo user: ${user.email}`);
 }
 
-main().finally(()=>prisma.$disconnect());
+main()
+  .catch((error) => {
+    console.error(error);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });
