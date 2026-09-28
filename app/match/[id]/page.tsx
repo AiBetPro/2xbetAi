@@ -1,6 +1,8 @@
 'use client';
 
 import { useParams } from 'next/navigation';
+import CouponBar from '../../../components/CouponBar';
+import { TeamBadge } from '../../../components/Icons';
 import { useState } from 'react';
 
 type MatchInfo = {
@@ -298,6 +300,7 @@ export default function MatchPage() {
         'goalix_selections',
         JSON.stringify(next)
       );
+      window.dispatchEvent(new Event('goalix:coupon-updated'));
 
       if (!localStorage.getItem('goalix_coupon_code')) {
         const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
@@ -372,7 +375,7 @@ export default function MatchPage() {
               <div className="min-w-0">
 
                 <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-lg font-black">
-                  {match.home.charAt(0)}
+                  <TeamBadge team={match.home} size="md" />
                 </div>
 
                 <h1 className="mt-2 truncate text-lg font-black">
@@ -392,7 +395,7 @@ export default function MatchPage() {
               <div className="min-w-0">
 
                 <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-lg font-black">
-                  {match.away.charAt(0)}
+                  <TeamBadge team={match.away} size="md" />
                 </div>
 
                 <h2 className="mt-2 truncate text-lg font-black">
@@ -536,7 +539,7 @@ export default function MatchPage() {
 
       </div>
 
-    </main>
+    <CouponBar />
+      </main>
   );
-  }
-      
+      }
