@@ -65,5 +65,4 @@ export function rankMatches(matches: any[] = []): AIRanking[] {
       };
     })
     .sort((a, b) => b.score - a.score);
-}
-        
+  }
