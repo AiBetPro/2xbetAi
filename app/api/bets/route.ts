@@ -48,7 +48,9 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Une ou plusieurs sélections sont invalides.' }, { status: 400 });
   }
 
-  const uniqueMatches = [...new Set(normalized.map((s: any) => s.matchId))];
+  const uniqueMatches: number[] = [
+  ...new Set<number>(normalized.map((s: any) => s.matchId)),
+];
   const prisma = getPrisma();
 
   try {
