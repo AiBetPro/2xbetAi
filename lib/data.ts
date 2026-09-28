@@ -1,28 +1,44 @@
-export interface Match {
-  id: number;
-  home_team: string;
-  away_team: string;
-  date: string;
-  league: string;
+import { Bet } from './data';
+
+class BetStore {
+  private bets: Bet[] = [];
+  private nextId = 1;
+
+  addBet(bet: Omit<Bet, 'id' | 'created_at'>): Bet {
+    const newBet: Bet = {
+      ...bet,
+      id: this.nextId++,
+      created_at: new Date().toISOString(),
+    };
+    this.bets.push(newBet);
+    return newBet;
+  }
+
+  getBets(): Bet[] {
+    return this.bets;
+  }
+
+  getBetById(id: number): Bet | undefined {
+    return this.bets.find(bet => bet.id === id);
+  }
+
+  updateBetStatus(id: number, status: Bet['status']): Bet | undefined {
+    const bet = this.getBetById(id);
+    if (bet) {
+      bet.status = status;
+    }
+    return bet;
+  }
+
+  deleteBet(id: number): boolean {
+    const index = this.bets.findIndex(bet => bet.id === id);
+    if (index > -1) {
+      this.bets.splice(index, 1);
+      return true;
+    }
+    return false;
+  }
 }
 
-export interface Bet {
-  id: number;
-  match_id: number;
-  amount: number;
-  odds: number;
-  status: 'pending' | 'won' | 'lost';
-  created_at: string;
-}
-
-export interface Prediction {
-  id: number;
-  match_id: number;
-  prediction: string;
-  confidence: number;
-  created_at: string;
-}
-
-export const mockMatches: Match[] = [];
-export const mockBets: Bet[] = [];
-export const mockPredictions: Prediction[] = [];
+export const betStore = new BetStore();
+export default betStore;
