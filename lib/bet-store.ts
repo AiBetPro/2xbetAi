@@ -1,4 +1,4 @@
-import { Bet, Match } from './data';
+import { Bet } from './data';
 
 class BetStore {
   private bets: Bet[] = [];
@@ -42,4 +42,3 @@ class BetStore {
 
 export const betStore = new BetStore();
 export default betStore;
-      
