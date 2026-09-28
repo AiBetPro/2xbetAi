@@ -36,3 +36,11 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+
+## Authentification et coupons
+
+- `/connexion` fournit une interface de démonstration Connexion/Inscription.
+- `Mon coupon` permet de saisir un code de réservation et de charger un coupon.
+- La sauvegarde inter-appareils du code nécessite `DATABASE_URL` et l'application de la modification Prisma `Coupon`.
+- La validation du pari est actuellement une validation de démonstration et ne réalise aucune transaction financière.
